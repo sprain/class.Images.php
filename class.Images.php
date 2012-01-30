@@ -92,7 +92,7 @@ class Image {
 		$this->imageInfo["imagetype"] = $data[2];
 		$this->imageInfo["htmlWidthAndHeight"] = $data[3];
 		$this->imageInfo["mime"] = $data["mime"];
-		$this->imageInfo["channels"] = $data["channels"];
+		$this->imageInfo["channels"] = ( isset($data["channels"]) ? $data["channels"] : NULL );
 		$this->imageInfo["bits"] = $data["bits"];
 		
 		return true;
