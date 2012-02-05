@@ -8,9 +8,11 @@
 /* Manuel Reinhard, manu@sprain.ch
 /* Twitter: @sprain
 /* Web: www.sprain.ch
-/* Beware, known for being one sandwich short of a picnic.
 /* ------------------------------------------------------------------------ */
 /* History:
+/* 2012/02/05 - Manuel Reinhard - Bugfix and simplification when cropping images
+/*								  added getHTML() and improved displayHTML()	
+/*								  added basic test file
 /* 2011/02/14 - Manuel Reinhard - added project to Github
 /* 2011/01/24 - Manuel Reinhard - added parameter $jpegQuality to functions resize() and rotate()
 /* 2010/11/09 - Manuel Reinhard - now uses sys_get_temp_dir() to determine default temp directory (if available),
@@ -177,7 +179,7 @@ class Image {
 		$newImage_square = false;
 		
 		//Set new data
-		$newImage_width = $max_width;
+		$newImage_width  = $max_width;
 		$newImage_height = $max_height;
 		$srcX = 0;
 		$srcY = 0;
@@ -213,20 +215,13 @@ class Image {
 		
 		//or want to crop it?	
 		}elseif($method == "crop"){
-	
-			//set width and height
-			if($newImage_landscape){
+
+			//set new max height or width
+			if($ratioOfMaxSizes > $this->getRatioWidthToHeight()){
 				$max_height = $max_width * $this->getRatioHeightToWidth();
-			}elseif($newImage_square){
-				if($landscape){
-					$max_width = $max_height * $this->getRatioWidthToHeight();
-				}else{
-					$max_height = $max_width * $this->getRatioHeightToWidth();
-				}//if
 			}else{
 				$max_width = $max_height * $this->getRatioWidthToHeight();
-			}//if
-			
+			}
 			
 			//which area to crop?
 			if($cropAreaLeftRight == "r"){
@@ -415,21 +410,35 @@ class Image {
 	
 	
 	/**
-	 * Sends html code to display image
+	 * Prints html code to display image
 	 */
-	public function displayHTML($alt="", $title="", $class="", $id=""){
+	public function displayHTML($alt=false, $title=false, $class=false, $id=false, $extras=false){
+		print $this->getHTML($alt, $title, $class, $id, $extras);
+	}//function
+	
+	
+	
+	/**
+	 * Creates html code to display image
+	 */
+	public function getHTML($alt=false, $title=false, $class=false, $id=false, $extras=false){
 	
 		//Build path
 		$path = str_replace($_SERVER["DOCUMENT_ROOT"], "", $this->image);
 	
 		//Make code
-		$code = '<img src="'.$path.'" alt="'.$alt.'" title="'.$title.'" class="'.$class.'" id="'.$id.'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+		$code = '<img src="'.$path.'" width="'.$this->getWidth().'" height="'.$this->getHeight().'"';
+		if($alt   ){ $code .= ' alt="'.$alt.'"';}
+		if($title ){ $code .= ' title="'.$title.'"';}
+		if($class ){ $code .= ' class="'.$class.'"';}
+		if($id    ){ $code .= ' id="'.$id.'"';}
+		if($extras){ $code .= ' '.$extras;}
+		$code .= ' />';
 		
 		//Output
-		print $code;
-		return true;
-	}//function
-	
+		return $code;
+		
+	}//function	
 	
 	
 	/**
