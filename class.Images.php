@@ -168,7 +168,7 @@ class Image {
 	 *               b = bottom
 	 */
 	public function resize($max_width, $max_height, $method="fit", $cropAreaLeftRight="c", $cropAreaBottomTop="c", $jpgQuality=75){
-	
+
 		//Get data
 		$width  = $this->getWidth();
 		$height = $this->getHeight();
@@ -247,10 +247,9 @@ class Image {
 		$imageC = ImageCreateTrueColor($newImage_width, $newImage_height);
 		$newImage = $image_create_func($this->image);
 		ImageCopyResampled($imageC, $newImage, 0, 0, $srcX, $srcY, $max_width, $max_height, $width, $height);
-		
-		
+
 		//Set image
-		if($image_save_func == "imageJPG"){
+		if($image_save_func == "imageJPG" || $image_save_func == "ImageJPEG"){
 			if(!$image_save_func($imageC, $this->tmpfile, $jpgQuality)){
 				throw new Exception("Cannot save file ".$this->tmpfile);
 			}//if
@@ -549,6 +548,11 @@ class Image {
 		//set some function stuff
 		switch ($this->getType()){
 			case 'jpeg':
+			    $image_create_func = 'ImageCreateFromJPEG';
+			    $image_save_func = 'ImageJPEG';
+			    break;
+			
+			case 'jpg':
 			    $image_create_func = 'ImageCreateFromJPEG';
 			    $image_save_func = 'ImageJPEG';
 			    break;
