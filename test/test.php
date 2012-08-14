@@ -1,5 +1,5 @@
 <?php
-include('class.Images.php');
+include('../class.Images.php');
 $dir = __DIR__;
 
 for ($i = 1; $i <= 8; $i++) {
