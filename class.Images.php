@@ -375,17 +375,17 @@ class Image {
 		//do it
 		$source = $image_create_func($this->image);
 		if(function_exists("imagerotate")){
-			$rotate = imagerotate($source, $degrees, 0, true);		
+			$imageRotated = imagerotate($source, $degrees, 0, true);		
 		}else{
-			$rotate = $this->rotateImage($source, $degrees);	
+			$imageRotated = $this->rotateImage($source, $degrees);	
 		}
 		
-		if($image_save_func == "imageJPG"){
-			if(!$image_save_func($imageC, $this->tmpfile, $jpgQuality)){
+		if($image_save_func == "ImageJPEG"){
+			if(!$image_save_func($imageRotated, $this->tmpfile, $jpgQuality)){
 				throw new Exception("Cannot save file ".$this->tmpfile);
 			}//if
 		}else{
-			if(!$image_save_func($imageC, $this->tmpfile)){
+			if(!$image_save_func($imageRotated, $this->tmpfile)){
 				throw new Exception("Cannot save file ".$this->tmpfile);
 			}//if
 		}//if
