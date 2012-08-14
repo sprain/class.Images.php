@@ -10,6 +10,7 @@
 /* Web: www.sprain.ch
 /* ------------------------------------------------------------------------ */
 /* History:
+/* 2012/08/14 - Manuel Reinhard - Bugfix in rotate()
 /* 2012/02/05 - Manuel Reinhard - Bugfix and simplification when cropping images
 /*								  added getHTML() and improved displayHTML()	
 /*								  added basic test file
@@ -426,7 +427,7 @@ class Image {
 		$path = str_replace($_SERVER["DOCUMENT_ROOT"], "", $this->image);
 	
 		//Make code
-		$code = '<img src="'.$path.'" width="'.$this->getWidth().'" height="'.$this->getHeight().'"';
+		$code = '<img src="/'.$path.'" width="'.$this->getWidth().'" height="'.$this->getHeight().'"';
 		if($alt   ){ $code .= ' alt="'.$alt.'"';}
 		if($title ){ $code .= ' title="'.$title.'"';}
 		if($class ){ $code .= ' class="'.$class.'"';}
