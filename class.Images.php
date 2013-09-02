@@ -162,11 +162,13 @@ class Image {
 	 * 				 l = left
 	 *               c = center
 	 *               r = right
+	 *				array( x-coordinate, width) 
 	 *
 	 * @param string $cropAreaBottomTop
 	 * 				 t = top
 	 *               c = center
 	 *               b = bottom
+	 *				array( y-coordinate, height) 
 	 */
 	public function resize($max_width, $max_height, $method="fit", $cropAreaLeftRight="c", $cropAreaBottomTop="c", $jpgQuality=75){
 
@@ -225,13 +227,29 @@ class Image {
 			}
 
 			//which area to crop?
-			if($cropAreaLeftRight == "r"){
+			if ( is_array($cropAreaLeftRight) ) {
+				$srcX	= $cropAreaLeftRight[0];
+				if($ratioOfMaxSizes > $this->getRatioWidthToHeight()){
+				    $width = $cropAreaLeftRight[1];
+				}else{
+				    $width = $cropAreaLeftRight[1] * $this->getRatioWidthToHeight();
+				}
+			}
+			elseif($cropAreaLeftRight == "r"){
 				$srcX = $width - (($newImage_width / $max_width) * $width);
 			}elseif($cropAreaLeftRight == "c"){
 				$srcX = ($width/2) - ((($newImage_width / $max_width) * $width) / 2);
 			}//if//if
 
-			if($cropAreaBottomTop == "b"){
+			if ( is_array($cropAreaBottomTop) ) {
+				$srcY	= $cropAreaBottomTop[0];
+				if($ratioOfMaxSizes > $this->getRatioWidthToHeight()){
+				    $height = $cropAreaBottomTop[1] * $this->getRatioHeightToWidth();
+				}else{
+				    $height = $cropAreaBottomTop[1];
+				}
+			}
+			elseif($cropAreaBottomTop == "b"){
 				$srcY = $height - (($newImage_height / $max_height) * $height);
 			}elseif($cropAreaBottomTop == "c"){
 				$srcY = ($height/2) - ((($newImage_height / $max_height) * $height) / 2);
@@ -276,6 +294,7 @@ class Image {
 		imagedestroy($imageC);
 
 	}//function
+
 
 
 
