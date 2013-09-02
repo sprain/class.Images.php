@@ -42,6 +42,7 @@ class Image {
 	protected $pathToTempFiles = "";
 	protected $Watermark;
 
+	protected $newFileType = '';
 
 	/**
 	 * Constructor of this class
@@ -124,6 +125,19 @@ class Image {
 		return true;
 	}
 
+
+	/**
+	 * Sets new image type
+	 * @param string $newFileType (jpeg, png, bmp, gif, vnd.wap.wbmp, xbm)
+	 */
+	public function setNewFileType($newFileType){
+
+		//set now
+		$this->newFileType = strtolower( $newFileType );
+
+		return true;
+
+	}//function
 
 	/**
 	 * Sets new main image
@@ -294,7 +308,6 @@ class Image {
 		imagedestroy($imageC);
 
 	}//function
-
 
 
 
@@ -573,41 +586,67 @@ class Image {
 	 * Returns function names
 	 */
 	protected function getFunctionNames(){
+		if ( $this->newFileType == '' )
+			$this->setNewFileType( $this->getType() );
 
 		//set some function stuff
 		switch ($this->getType()){
 			case 'jpeg':
 			    $image_create_func = 'ImageCreateFromJPEG';
-			    $image_save_func = 'ImageJPEG';
 			    break;
 
 			case 'png':
 			    $image_create_func = 'ImageCreateFromPNG';
-			    $image_save_func = 'ImagePNG';
 			    break;
 
 			case 'bmp':
 			    $image_create_func = 'ImageCreateFromBMP';
-			    $image_save_func = 'ImageBMP';
 			    break;
 
 			case 'gif':
 			    $image_create_func = 'ImageCreateFromGIF';
-			    $image_save_func = 'ImageGIF';
 			    break;
 
 			case 'vnd.wap.wbmp':
 			    $image_create_func = 'ImageCreateFromWBMP';
-			    $image_save_func = 'ImageWBMP';
 			    break;
 
 			case 'xbm':
 			    $image_create_func = 'ImageCreateFromXBM';
-			    $image_save_func = 'ImageXBM';
 			    break;
 
 			default:
 				$image_create_func = 'ImageCreateFromJPEG';
+		}//switch
+
+		//set some function stuff
+		switch ( $this->newFileType ){
+			case 'jpg':
+			case 'jpeg':
+			    $image_save_func = 'ImageJPEG';
+			    break;
+
+			case 'png':
+			    $image_save_func = 'ImagePNG';
+			    break;
+
+			case 'bmp':
+			    $image_save_func = 'ImageBMP';
+			    break;
+
+			case 'gif':
+			    $image_save_func = 'ImageGIF';
+			    break;
+
+			case 'vnd.wap.wbmp':
+			    $image_save_func = 'ImageWBMP';
+			    break;
+
+			case 'xbm':
+			    $image_save_func = 'ImageXBM';
+			    break;
+
+			default:
 			    $image_save_func = 'ImageJPEG';
 		}//switch
 
