@@ -1,6 +1,5 @@
 <?php
 include('../class.Images.php');
-$dir = __DIR__;
 
 for ($i = 1; $i <= 8; $i++) {
 	$Image = new Image('image'.$i.'.jpg');

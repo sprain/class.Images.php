@@ -2,6 +2,8 @@
 
 Yes, I know. It is yet another image manipulation class for PHP. But so far I haven’t found the one that really matches my needs. Either they are too complicated or bound to another system. So I simply created my own class with just the functions I need. So it’s the perfect class for me. If you like it, too – even better! Feel free to contribute and make it better.
 
+*Please note:* This class has been developed some years ago. There are probably better solutions out there by now. If I ever find the time I might redo this class. In the meantime however, feel free to contribute and improve it.
+
 ## Examples
 
 Check out the examples folder for more examples.
@@ -25,8 +27,6 @@ Here’s a basic example of what you can do and this is what you’ll get with i
 	$image->display();
 
 
-
-
 ## Contact
 
 Manuel Reinhard, <manu@sprain.ch> ·
@@ -36,7 +36,7 @@ Manuel Reinhard, <manu@sprain.ch> ·
 
 ## License
 
-Copyright (c) 2010-2012 Manuel Reinhard
+Copyright (c) 2010 until today, Manuel Reinhard
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
