@@ -205,6 +205,26 @@ class Image {
 
         //Let's get it on, create image!
         list($image_create_func, $image_save_func) = $this->getFunctionNames();
+
+		// check if it is a jpg and if there are exif data about Orientation (e.g. on uploading an image from smartphone)
+		if( $this->getMimeType() == "image/jpg" || $this->getMimeType() == "image/jpeg")
+		{
+			$exif = exif_read_data($this->image);
+			if(!empty($exif['Orientation'])) {
+				switch($exif['Orientation']) {
+					case 8:
+						$this->rotate(90, $jpgQuality);
+					break;
+					case 3:
+						$this->rotate(180, $jpgQuality);
+					break;
+					case 6:
+						$this->rotate(-90, $jpgQuality);
+					break;
+				}
+			}
+		}
+
         $imageC = ImageCreateTrueColor($newImage_width, $newImage_height);
         $newImage = $image_create_func($this->image);
 
