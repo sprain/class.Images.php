@@ -154,7 +154,7 @@ class Image {
      *               b = bottom
      *               array( y-coordinate, height)
      */
-    public function resize($max_width, $max_height, $method="fit", $cropAreaLeftRight="c", $cropAreaBottomTop="c", $jpgQuality=75)
+    public function resize($max_width, $max_height, $method="fit", $cropAreaLeftRight="c", $cropAreaBottomTop="c", $jpgQuality=75, $enlarge=false)
     {
         $width  = $this->getWidth();
         $height = $this->getHeight();
@@ -219,7 +219,14 @@ class Image {
             }
         }
 
-        //Let's get it on, create image!
+        if(!$enlarge && ($newImage_width>$width || $newImage_height>$height)){
+                $newImage_width = $width;
+                $max_width = $width;
+                $newImage_height = $height;
+                $max_height = $height;
+        }
+
+	//Let's get it on, create image!
         list($image_create_func, $image_save_func) = $this->getFunctionNames();
 
 		// check if it is a jpg and if there are exif data about Orientation (e.g. on uploading an image from smartphone)
