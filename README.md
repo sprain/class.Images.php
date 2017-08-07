@@ -1,4 +1,4 @@
-#class.Images.php
+# class.Images.php
 
 Yes, I know. It is yet another image manipulation class for PHP. But so far I haven’t found the one that really matches my needs. Either they are too complicated or bound to another system. So I simply created my own class with just the functions I need. So it’s the perfect class for me. If you like it, too – even better! Feel free to contribute and make it better.
 
